@@ -1,14 +1,14 @@
 import express from 'express';
 import connectDB from './config/db.js';
+import languageRoutes from "./routes/languageRoutes.js";
+
 
 const app = express();
 app.use(express.json());
 
 connectDB(); 
 
-app.get('/', (req, res) => {
-    res.send("Backend working with local MongoDB 🚀");
-});
+app.use("/api/languages", languageRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {
