@@ -1,16 +1,16 @@
-import express from 'express'
-import connectDB from './config/db';
+import express from 'express';
+import connectDB from './config/db.js';
 
 const app = express();
 app.use(express.json());
 
-connectDB();
+connectDB(); 
 
-app.get('/',(req,res)=>{
-    res.send("rdtfghbnklm,;");
-})
+app.get('/', (req, res) => {
+    res.send("Backend working with local MongoDB 🚀");
+});
 
-const PORT = 5000;
-app.listen(PORT,()=>{
-    console.log(`server running on port no ${PORT}`);
-})
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
