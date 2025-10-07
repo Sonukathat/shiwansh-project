@@ -57,3 +57,24 @@ export const deleteStudent = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
+export const searchStudents = async (req, res) => {
+  try {
+    const { name, email, mobile, country, state, district } = req.query;
+
+    // Build filter dynamically
+    const filter = {};
+    if (name) filter.name = { $regex: name, $options: "i" }; // case-insensitive
+    if (email) filter.email = { $regex: email, $options: "i" };
+    if (mobile) filter.mobile = { $regex: mobile, $options: "i" };
+    if (country) filter.country = { $regex: country, $options: "i" };
+    if (state) filter.state = { $regex: state, $options: "i" };
+    if (district) filter.district = { $regex: district, $options: "i" };
+
+    const students = await Student.find(filter);
+    res.json(students);
+  } catch (err) {
+    res.status(500).json({ message: "Server Error" });
+  }
+};
