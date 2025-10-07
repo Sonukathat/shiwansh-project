@@ -1,15 +1,23 @@
+import { useEffect, useState } from "react";
+import type { FormEvent } from "react"; // ✅ Type-only import
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 
+// Country type
+interface CountryType {
+  _id: string;
+  name: string;
+  image: string;
+}
+
 function Country() {
-  const [countries, setCountries] = useState([]);
-  const [id, setId] = useState(0);
+  const [countries, setCountries] = useState<CountryType[]>([]);
+  const [id, setId] = useState<string>(""); // MongoDB _id
   const [name, setName] = useState("");
   const [image, setImage] = useState<File | null>(null);
-  
-  const baseUrl = "https://localhost:7071/api/Countries";
-  const imageBasePath = "https://localhost:7071/api/Uploads";
+
+  const baseUrl = "http://localhost:3000/api/Countries"; // backend API
+  const imageBasePath = "http://localhost:3000/uploads"; // static folder
 
   useEffect(() => {
     loadCountries();
@@ -17,9 +25,10 @@ function Country() {
 
   // Load countries
   const loadCountries = () => {
-    axios.get(baseUrl).then((res) => {
-      setCountries(res.data);
-    });
+    axios
+      .get<CountryType[]>(baseUrl)
+      .then((res) => setCountries(res.data))
+      .catch(() => console.error("Failed to load countries"));
   };
 
   // Toast helper
@@ -36,17 +45,16 @@ function Country() {
   };
 
   // Save (Add/Update)
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("id", id.toString());
+    if (id) formData.append("id", id);
     formData.append("name", name);
-    if (image) {
-      formData.append("image", image);
-    }
+    if (image) formData.append("image", image);
 
-    if (id === 0) {
+    if (!id) {
+      // Add country
       axios
         .post(baseUrl, formData, {
           headers: { "Content-Type": "multipart/form-data" },
@@ -55,8 +63,12 @@ function Country() {
           toast("success", "Country added");
           resetForm();
           loadCountries();
-        });
+        })
+        .catch((err) =>
+          toast("error", err.response?.data?.message || "Server error")
+        );
     } else {
+      // Update country
       axios
         .put(baseUrl, formData, {
           headers: { "Content-Type": "multipart/form-data" },
@@ -65,18 +77,22 @@ function Country() {
           toast("success", "Country updated");
           resetForm();
           loadCountries();
-        });
+        })
+        .catch((err) =>
+          toast("error", err.response?.data?.message || "Server error")
+        );
     }
   };
 
   // Edit
-  const handleEdit = (country: any) => {
-    setId(country.id);
+  const handleEdit = (country: CountryType) => {
+    setId(country._id);
     setName(country.name);
+    setImage(null); // clear previous selection
   };
 
   // Delete
-  const handleDelete = (countryId: number) => {
+  const handleDelete = (countryId: string) => {
     Swal.fire({
       title: "Delete country?",
       text: "This cannot be undone!",
@@ -87,17 +103,20 @@ function Country() {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`${baseUrl}/${countryId}`).then(() => {
-          toast("success", "Country deleted");
-          loadCountries();
-        });
+        axios
+          .delete(`${baseUrl}/${countryId}`)
+          .then(() => {
+            toast("success", "Country deleted");
+            loadCountries();
+          })
+          .catch(() => toast("error", "Delete failed"));
       }
     });
   };
 
   // Reset form
   const resetForm = () => {
-    setId(0);
+    setId("");
     setName("");
     setImage(null);
   };
@@ -130,14 +149,14 @@ function Country() {
                 setImage(e.target.files[0]);
               }
             }}
-            required={id === 0}
+            required={!id} // required only when adding
           />
         </div>
 
         <div className="row mb-3 text-center">
           <div className="col">
             <button type="submit" className="btn btn-primary">
-              {id === 0 ? "Add Country" : "Update Country"}
+              {id ? "Update Country" : "Add Country"}
             </button>
           </div>
         </div>
@@ -146,16 +165,14 @@ function Country() {
       <table className="table table-bordered table-striped">
         <thead>
           <tr>
-            <th>Id</th>
             <th>Name</th>
             <th>Image</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {countries.map((c: any) => (
-            <tr key={c.id}>
-              <td>{c.id}</td>
+          {countries.map((c) => (
+            <tr key={c._id}>
               <td>{c.name}</td>
               <td>
                 <img
@@ -173,7 +190,7 @@ function Country() {
                 </button>
                 <button
                   className="btn btn-sm btn-danger"
-                  onClick={() => handleDelete(c.id)}
+                  onClick={() => handleDelete(c._id)}
                 >
                   Delete
                 </button>
