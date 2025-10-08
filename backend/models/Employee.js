@@ -28,7 +28,7 @@ const employeeSchema = new mongoose.Schema({
     enum: ["Male", "Female", "Other"]
   },
   language: {
-    type: String
+     type: [String]  
   }
 }, { timestamps: true });
 
