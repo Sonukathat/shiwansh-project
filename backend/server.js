@@ -7,6 +7,8 @@ import locationRoutes from "./routes/locationRoutes.js";
 import districtRoutes from "./routes/districtRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
+import employeeRoutes from "./routes/employeeRoutes.js";
+
 
 import path from "path";
 
@@ -24,7 +26,7 @@ app.use("/api/locations", locationRoutes);
 app.use("/api/districts", districtRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/students", studentRoutes);
-
+app.use("/api/employees", employeeRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {
