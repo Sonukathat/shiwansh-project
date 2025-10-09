@@ -2,7 +2,7 @@ import { useState } from "react";
 import Select from "react-select";
 
 function MultiselectDropdown() {
-  const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [selectedLanguages, setSelectedLanguages] = useState<{ value: string; label: string }[]>([]);
 
   const languageOptions = [
     { value: "hindi", label: "Hindi" },
@@ -65,7 +65,7 @@ function MultiselectDropdown() {
               isMulti
               isSearchable
               value={selectedLanguages}
-              onChange={(selected) => setSelectedLanguages(selected)}
+              onChange={(selected) => setSelectedLanguages(selected as { value: string; label: string }[])}
               placeholder="Select languages..."
             />
           </div>
