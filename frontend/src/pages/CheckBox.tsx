@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 interface Employee {
   _id?: string;
@@ -14,6 +15,18 @@ interface Employee {
 }
 
 function CheckBox() {
+  // Toast helper
+  const toast = (icon: "success" | "error" | "warning", title: string) => {
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon,
+      title,
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+    });
+  };
   const [employee, setEmployee] = useState<Employee>({
     name: "",
     email: "",
@@ -69,12 +82,12 @@ function CheckBox() {
       if (editingId) {
         // UPDATE
         await axios.put(`${API_URL}/${editingId}`, employee);
-        alert("Employee updated successfully!");
+        toast("success", "Employee updated successfully!");
         setEditingId(null);
       } else {
         // CREATE
         await axios.post(API_URL, employee);
-        alert("Employee added successfully!");
+        toast("success", "Employee added successfully!");
       }
       // Reset form
       setEmployee({
@@ -89,19 +102,29 @@ function CheckBox() {
       });
       fetchEmployees(); // Refresh table
     } catch (error: any) {
-      alert("Failed to add/update employee: " + (error.response?.data?.message || error.message));
+      toast("error", "Failed to add/update employee: " + (error.response?.data?.message || error.message));
     }
   };
 
   // Delete employee
   const handleDelete = async (id: string | undefined) => {
     if (!id) return;
-    if (!window.confirm("Are you sure you want to delete this employee?")) return;
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    });
+    if (!result.isConfirmed) return;
     try {
       await axios.delete(`${API_URL}/${id}`);
+      toast("success", "Employee deleted successfully!");
       fetchEmployees();
     } catch (error: any) {
-      alert("Failed to delete employee: " + (error.response?.data?.message || error.message));
+      toast("error", "Failed to delete employee: " + (error.response?.data?.message || error.message));
     }
   };
 
