@@ -26,7 +26,6 @@ function ImageUpload() {
     loadCustomers();
   }, []);
 
-  // Load all customers
   const loadCustomers = () => {
     axios
       .get<CustomerType[]>(baseUrl)
@@ -34,7 +33,6 @@ function ImageUpload() {
       .catch(() => console.error("Failed to load customers"));
   };
 
-  // Toast helper
   const toast = (icon: "success" | "error" | "warning", title: string) => {
     Swal.fire({
       toast: true,
@@ -47,7 +45,6 @@ function ImageUpload() {
     });
   };
 
-  // Add or Update customer
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -63,7 +60,6 @@ function ImageUpload() {
     if (image) formData.append("image", image);
 
     if (editingId) {
-      // Update
       axios
         .put(`${baseUrl}/${editingId}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
@@ -75,7 +71,6 @@ function ImageUpload() {
         })
         .catch(() => toast("error", "Update failed"));
     } else {
-      // Add
       axios
         .post(baseUrl, formData, {
           headers: { "Content-Type": "multipart/form-data" },
@@ -89,7 +84,6 @@ function ImageUpload() {
     }
   };
 
-  // Edit customer
   const handleEdit = (customer: CustomerType) => {
     setName(customer.name);
     setEmail(customer.email);
@@ -97,7 +91,6 @@ function ImageUpload() {
     setEditingId(customer._id);
   };
 
-  // Delete customer
   const handleDelete = (id: string) => {
     Swal.fire({
       title: "Delete this customer?",
@@ -127,11 +120,13 @@ function ImageUpload() {
   };
 
   return (
-    <div className="container">
-      <h2>Manage Customer</h2>
+    <div className="container my-4">
+      <h2 className="mb-4">Manage Customer</h2>
+
+      {/* Form */}
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div className="row mb-3">
-          <div className="col">
+        <div className="row g-2 mb-3">
+          <div className="col-12 col-md-6">
             <input
               type="text"
               placeholder="Enter Name"
@@ -141,7 +136,7 @@ function ImageUpload() {
               required
             />
           </div>
-          <div className="col">
+          <div className="col-12 col-md-6">
             <input
               type="email"
               placeholder="Enter Email"
@@ -153,8 +148,8 @@ function ImageUpload() {
           </div>
         </div>
 
-        <div className="row mb-3">
-          <div className="col">
+        <div className="row g-2 mb-3">
+          <div className="col-12 col-md-6">
             <input
               type="text"
               placeholder="Enter Mobile"
@@ -164,7 +159,7 @@ function ImageUpload() {
               required
             />
           </div>
-          <div className="col">
+          <div className="col-12 col-md-6">
             <input
               type="file"
               className="form-control"
@@ -174,71 +169,79 @@ function ImageUpload() {
                   setImage(e.target.files[0]);
                 }
               }}
-              required={!editingId} // require image only for add
+              required={!editingId}
             />
           </div>
         </div>
 
-        <div className="row mb-3 text-center">
-          <div className="col">
-            <button type="submit" className="btn btn-primary">
-              {editingId ? "Update Customer" : "Add Customer"}
+        <div className="mb-4 text-center">
+          <button type="submit" className="btn btn-primary">
+            {editingId ? "Update Customer" : "Add Customer"}
+          </button>
+          {editingId && (
+            <button type="button" className="btn btn-secondary ms-2" onClick={resetForm}>
+              Cancel
             </button>
-            {editingId && (
-              <button type="button" className="btn btn-secondary ms-2" onClick={resetForm}>
-                Cancel
-              </button>
-            )}
-          </div>
+          )}
         </div>
       </form>
 
+      {/* Table */}
       <h4>Customer List</h4>
-      <table className="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Mobile</th>
-            <th>Image</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {customers.map((c) => (
-            <tr key={c._id}>
-              <td>{c.name}</td>
-              <td>{c.email}</td>
-              <td>{c.mobile}</td>
-              <td>
-                {c.image ? (
-                  <img
-                    src={`${imageBaseUrl}/${c.image}`}
-                    alt={c.name}
-                    style={{ width: "60px", height: "60px", objectFit: "cover" }}
-                  />
-                ) : (
-                  "No Image"
-                )}
-              </td>
-              <td>
-                <button
-                  className="btn btn-sm btn-warning me-2"
-                  onClick={() => handleEdit(c)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-sm btn-danger"
-                  onClick={() => handleDelete(c._id)}
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="table-responsive">
+        <table className="table table-bordered table-striped align-middle">
+          <thead className="table-dark">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Image</th>
+              <th className="text-center">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {customers.map((c) => (
+              <tr key={c._id}>
+                <td>{c.name}</td>
+                <td>{c.email}</td>
+                <td>{c.mobile}</td>
+                <td>
+                  {c.image ? (
+                    <img
+                      src={`${imageBaseUrl}/${c.image}`}
+                      alt={c.name}
+                      style={{ width: "60px", height: "60px", objectFit: "cover" }}
+                    />
+                  ) : (
+                    "No Image"
+                  )}
+                </td>
+                <td className="text-center">
+                  <button
+                    className="btn btn-sm btn-warning me-2 mb-1"
+                    onClick={() => handleEdit(c)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-sm btn-danger mb-1"
+                    onClick={() => handleDelete(c._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+            {customers.length === 0 && (
+              <tr>
+                <td colSpan={5} className="text-center text-muted">
+                  No customers found
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
