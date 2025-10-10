@@ -1,52 +1,44 @@
-/* Responsive helpers for the project */
+/*
+  responsive.css
+  Small, safe helpers for the app's responsive behavior.
 
-/* Make tables horizontally scrollable on small screens */
+  Notes:
+  - Keep these rules lightweight: the project uses Bootstrap for core layout.
+  - Add component-specific responsive tweaks close to that component if they grow.
+*/
+
+/* Horizontal scrolling for wide tables on narrow viewports */
 .table-responsive {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-/* Ensure form controls take full width on small screens */
-.form-control {
-  width: 100%;
-}
+/* Ensure form controls fill their column on small screens */
+.form-control { width: 100%; }
 
-/* Card body padding on small screens */
+/* Smaller paddings for card bodies on phones */
 @media (max-width: 576px) {
-  .card-body {
-    padding: 0.75rem;
-  }
+  .card-body { padding: 0.75rem; }
   .px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
   .py-3 { padding-top: 0.6rem !important; padding-bottom: 0.6rem !important; }
 }
 
-/* Reduce sidebar width on medium screens */
+/* Sidebar width tweak for mid-sized screens */
 @media (min-width: 768px) and (max-width: 991px) {
-  aside.bg-white.border-end {
-    width: 200px !important;
-  }
+  aside.bg-white.border-end { width: 200px !important; }
 }
 
-/* Stack nav labels on very small screens */
-@media (max-width: 480px) {
-  .nav-link { font-size: 0.9rem; }
-}
+/* Slightly smaller nav text for very small screens */
+@media (max-width: 480px) { .nav-link { font-size: 0.9rem; } }
 
-/* Make action buttons in tables smaller on small screens */
+/* Compact action buttons inside tables on small screens */
 .table .btn { padding: 0.25rem 0.5rem; font-size: 0.85rem; }
 
-/* Make certain buttons full-width on mobile when needed */
-@media (max-width: 576px) {
-  .btn-mobile-full { width: 100%; display: block; }
-}
+/* Utility: make important action buttons full-width on mobile (use sparingly) */
+@media (max-width: 576px) { .btn-mobile-full { width: 100%; display: block; } }
 
-/* Sidebar always visible on large screens */
-@media (min-width: 992px) {
-  aside {
-    position: relative !important;
-    transform: translateX(0) !important;
-  }
-}
-
-
+/* Optional: two-column forms on small screens (used by District/State pages)
+   Use classes like .col-6 to split inputs into two columns on xs, and col-md-4
+   to have three columns on md and up. */
+.form-col-2-sm { width: 50%; }

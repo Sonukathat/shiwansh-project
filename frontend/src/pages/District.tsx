@@ -23,6 +23,7 @@ function District() {
     loadDistricts();
   }, []);
 
+  // Load all districts
   const loadDistricts = () => {
     axios
       .get<DistrictType[]>(baseUrl)
@@ -30,6 +31,7 @@ function District() {
       .catch(() => console.error("Failed to load districts"));
   };
 
+  // Toast helper
   const toast = (icon: "success" | "error" | "warning", title: string) => {
     Swal.fire({
       toast: true,
@@ -42,6 +44,7 @@ function District() {
     });
   };
 
+  // Add or Update district
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!country || !stateName || !districtName) {
@@ -52,6 +55,7 @@ function District() {
     const payload = { country, state: stateName, district: districtName };
 
     if (editingId) {
+      // Update
       axios
         .put(`${baseUrl}/${editingId}`, payload)
         .then(() => {
@@ -61,6 +65,7 @@ function District() {
         })
         .catch(() => toast("error", "Update failed"));
     } else {
+      // Add
       axios
         .post(baseUrl, payload)
         .then(() => {
@@ -72,6 +77,7 @@ function District() {
     }
   };
 
+  // Edit a district
   const handleEdit = (district: DistrictType) => {
     setCountry(district.country);
     setStateName(district.state);
@@ -79,6 +85,7 @@ function District() {
     setEditingId(district._id);
   };
 
+  // Delete a district
   const handleDelete = (id: string) => {
     Swal.fire({
       title: "Delete this district?",
@@ -108,12 +115,10 @@ function District() {
 
   return (
     <div className="container">
-      <h2 className="mb-4">Manage District</h2>
-
-      {/* Form */}
+      <h2>Manage District</h2>
       <form onSubmit={handleSubmit}>
-        <div className="row g-2 mb-3">
-          <div className="col-12 col-md-4">
+        <div className="row mb-3">
+          <div className="col">
             <input
               type="text"
               placeholder="Enter Country"
@@ -123,7 +128,7 @@ function District() {
               required
             />
           </div>
-          <div className="col-12 col-md-4">
+          <div className="col">
             <input
               type="text"
               placeholder="Enter State"
@@ -133,7 +138,7 @@ function District() {
               required
             />
           </div>
-          <div className="col-12 col-md-4">
+          <div className="col">
             <input
               type="text"
               placeholder="Enter District"
@@ -144,64 +149,54 @@ function District() {
             />
           </div>
         </div>
-
-        <div className="row mb-4">
-          <div className="col-12 col-md-6 d-grid gap-2">
+        <div className="row mb-3 text-center">
+          <div className="col">
             <button type="submit" className="btn btn-primary">
               {editingId ? "Update District" : "Add District"}
             </button>
-          </div>
-          {editingId && (
-            <div className="col-12 col-md-6 d-grid gap-2 mt-2 mt-md-0">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={resetForm}
-              >
+            {editingId && (
+              <button type="button" className="btn btn-secondary ms-2" onClick={resetForm}>
                 Cancel
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </form>
 
-      {/* Table */}
-      <h4 className="mb-3">Districts List</h4>
-      <div className="table-responsive">
-        <table className="table table-bordered table-striped">
-          <thead className="table-dark">
-            <tr>
-              <th>Country</th>
-              <th>State</th>
-              <th>District</th>
-              <th>Actions</th>
+      <h4>Districts List</h4>
+      <table className="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>State</th>
+            <th>District</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {districts.map((d) => (
+            <tr key={d._id}>
+              <td>{d.country}</td>
+              <td>{d.state}</td>
+              <td>{d.district}</td>
+              <td>
+                <button
+                  className="btn btn-sm btn-warning me-2"
+                  onClick={() => handleEdit(d)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="btn btn-sm btn-danger"
+                  onClick={() => handleDelete(d._id)}
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {districts.map((d) => (
-              <tr key={d._id}>
-                <td>{d.country}</td>
-                <td>{d.state}</td>
-                <td>{d.district}</td>
-                <td className="text-nowrap">
-                  <button
-                    className="btn btn-sm btn-warning me-2 mb-1"
-                    onClick={() => handleEdit(d)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-sm btn-danger mb-1"
-                    onClick={() => handleDelete(d._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
