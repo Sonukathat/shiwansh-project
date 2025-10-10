@@ -25,13 +25,13 @@ function App() {
           <Route path="/state" element={<State />} />
           <Route path="/district" element={<District />} />
           <Route path="/imageupload" element={<ImageUpload />} />
-          <Route path="/radiobutton" element={<RadioButton />} />
-          <Route path="/searching" element={<Searching />} />
-          <Route path="/pagination" element={<Pagination />} />
-          <Route path="/exportcsv" element={<ExportCSV />} />
-          <Route path="/checkbox" element={<CheckBox />} />
-          <Route path="/multiselectdropdown" element={<MultiselectDropdown />} />
-          <Route path="/authentication" element={<Authentication />} />
+          {/* <Route path="/radiobutton" element={<RadioButton />} /> */}
+          {/* <Route path="/searching" element={<Searching />} /> */}
+          {/* <Route path="/pagination" element={<Pagination />} /> */}
+          {/* <Route path="/exportcsv" element={<ExportCSV />} /> */}
+          {/* <Route path="/checkbox" element={<CheckBox />} /> */}
+          {/* <Route path="/multiselectdropdown" element={<MultiselectDropdown />} /> */}
+          {/* <Route path="/authentication" element={<Authentication />} /> */}
         </Routes>
       </Layout>
     </Router>
