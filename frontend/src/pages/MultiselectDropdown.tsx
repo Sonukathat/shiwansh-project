@@ -163,33 +163,33 @@ function MultiselectDropdown() {
 
       <form onSubmit={handleSubmit} className="p-3 border rounded shadow-sm bg-light mb-4">
         <div className="row mb-3">
-          <div className="col-12 col-sm-6 col-md-4 mb-2">
+          <div className="col">
             <input type="text" name="name" placeholder="Enter Name" className="form-control" value={employee.name} onChange={handleChange} required />
           </div>
-          <div className="col-12 col-sm-6 col-md-4 mb-2">
+          <div className="col">
             <input type="email" name="email" placeholder="Enter Email" className="form-control" value={employee.email} onChange={handleChange} required />
           </div>
-          <div className="col-12 col-sm-6 col-md-4 mb-2">
+          <div className="col">
             <input type="text" name="mobile" placeholder="Enter Mobile" className="form-control" value={employee.mobile} onChange={handleChange} required />
           </div>
         </div>
 
         <div className="row mb-3">
-          <div className="col-12 col-sm-6 col-md-4 mb-2">
+          <div className="col">
             <input type="text" name="country" placeholder="Enter Country" className="form-control" value={employee.country} onChange={handleChange} />
           </div>
-          <div className="col-12 col-sm-6 col-md-4 mb-2">
+          <div className="col">
             <input type="text" name="state" placeholder="Enter State" className="form-control" value={employee.state} onChange={handleChange} />
           </div>
-          <div className="col-12 col-sm-6 col-md-4 mb-2">
+          <div className="col">
             <input type="text" name="district" placeholder="Enter District" className="form-control" value={employee.district} onChange={handleChange} />
           </div>
         </div>
 
         <div className="row mb-3">
-          <div className="col-12 col-md-4 mb-2">
+          <div className="col-md-4">
             <label className="form-label d-block">Gender</label>
-            {['Male','Female','Other'].map((g) => (
+            {['Male','Female','Other'].map(g => (
               <div key={g} className="form-check form-check-inline">
                 <input type="radio" name="gender" value={g} className="form-check-input" checked={employee.gender === g} onChange={handleChange} />
                 <label className="form-check-label">{g}</label>
@@ -197,7 +197,7 @@ function MultiselectDropdown() {
             ))}
           </div>
 
-          <div className="col-12 col-md-4 mb-2">
+          <div className="col-md-4">
             <label className="form-label">Languages</label>
             <Select
               options={languageOptions}
@@ -209,48 +209,39 @@ function MultiselectDropdown() {
             />
           </div>
 
-          <div className="col-12 col-md-4 d-flex align-items-end justify-content-end">
-            <button type="submit" className="btn btn-primary w-100 btn-mobile-full">{editingId ? "Update Employee" : "Add Employee"}</button>
+          <div className="col-md-4 d-flex align-items-end justify-content-end">
+            <button type="submit" className="btn btn-primary w-100">{editingId ? "Update Employee" : "Add Employee"}</button>
           </div>
         </div>
       </form>
 
       {/* Employees Table */}
-      <div className="table-responsive">
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Mobile</th>
-              <th>Country</th>
-              <th>State</th>
-              <th>District</th>
-              <th>Gender</th>
-              <th>Languages</th>
-              <th>Actions</th>
+      <table className="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th><th>Email</th><th>Mobile</th><th>Country</th>
+            <th>State</th><th>District</th><th>Gender</th><th>Languages</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {employees.map((emp: Employee) => (
+            <tr key={emp._id}>
+              <td>{emp.name}</td>
+              <td>{emp.email}</td>
+              <td>{emp.mobile}</td>
+              <td>{emp.country}</td>
+              <td>{emp.state}</td>
+              <td>{emp.district}</td>
+              <td>{emp.gender}</td>
+              <td>{emp.language.join(", ")}</td>
+              <td>
+                <button className="btn btn-sm btn-warning me-2" onClick={() => handleEdit(emp)}>Edit</button>
+                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(emp._id)}>Delete</button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {employees.map((emp: Employee) => (
-              <tr key={emp._id}>
-                <td>{emp.name}</td>
-                <td>{emp.email}</td>
-                <td>{emp.mobile}</td>
-                <td>{emp.country}</td>
-                <td>{emp.state}</td>
-                <td>{emp.district}</td>
-                <td>{emp.gender}</td>
-                <td>{emp.language.join(", ")}</td>
-                <td>
-                  <button className="btn btn-sm btn-warning me-2" onClick={() => handleEdit(emp)}>Edit</button>
-                  <button className="btn btn-sm btn-danger" onClick={() => handleDelete(emp._id)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

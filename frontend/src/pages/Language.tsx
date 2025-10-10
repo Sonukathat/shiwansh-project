@@ -97,7 +97,7 @@ function Language() {
       <h2>Manage Language</h2>
       <form onSubmit={handleSubmit} className="mb-4">
         <div className="row mb-3">
-          <div className="col-12 col-sm-8 mb-2 mb-sm-0">
+          <div className="col">
             <input
               type="text"
               placeholder="Enter Language Name"
@@ -107,14 +107,13 @@ function Language() {
               required
             />
           </div>
-          <div className="col-12 col-sm-4">
-            <button className="btn btn-primary w-100 btn-mobile-full">{editingId ? "Update Language" : "Add Language"}</button>
+          <div className="col">
+            <button className="btn btn-primary w-100">{editingId ? "Update Language" : "Add Language"}</button>
           </div>
         </div>
       </form>
 
       {/* Languages Table */}
-      <div className="table-responsive">
       <table className="table table-bordered">
         <thead>
           <tr>
@@ -134,7 +133,6 @@ function Language() {
           ))}
         </tbody>
       </table>
-      </div>
     </div>
   );
 }
