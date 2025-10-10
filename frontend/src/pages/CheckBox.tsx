@@ -201,8 +201,9 @@ function CheckBox() {
         </div>
       </form>
 
-      {/* Employees Table */}
-      <table className="table table-bordered">
+  {/* Employees Table */}
+  <div className="table-responsive">
+  <table className="table table-bordered">
         <thead>
           <tr>
             <th>Name</th><th>Email</th><th>Mobile</th><th>Country</th>
@@ -227,7 +228,8 @@ function CheckBox() {
             </tr>
           ))}
         </tbody>
-      </table>
+  </table>
+  </div>
 
     </div>
   );

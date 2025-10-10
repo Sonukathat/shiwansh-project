@@ -163,8 +163,9 @@ function District() {
         </div>
       </form>
 
-      <h4>Districts List</h4>
-      <table className="table table-bordered table-striped">
+  <h4>Districts List</h4>
+  <div className="table-responsive">
+  <table className="table table-bordered table-striped">
         <thead>
           <tr>
             <th>Country</th>
@@ -196,7 +197,8 @@ function District() {
             </tr>
           ))}
         </tbody>
-      </table>
+  </table>
+  </div>
     </div>
   );
 }

@@ -113,8 +113,9 @@ function Language() {
         </div>
       </form>
 
-      {/* Languages Table */}
-      <table className="table table-bordered">
+  {/* Languages Table */}
+  <div className="table-responsive">
+  <table className="table table-bordered">
         <thead>
           <tr>
             <th>Name</th>
@@ -132,7 +133,8 @@ function Language() {
             </tr>
           ))}
         </tbody>
-      </table>
+  </table>
+  </div>
     </div>
   );
 }

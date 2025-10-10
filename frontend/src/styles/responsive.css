@@ -1,0 +1,37 @@
+/* Responsive helpers for the project */
+
+/* Make tables horizontally scrollable on small screens */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure form controls take full width on small screens */
+.form-control {
+  width: 100%;
+}
+
+/* Card body padding on small screens */
+@media (max-width: 576px) {
+  .card-body {
+    padding: 0.75rem;
+  }
+  .px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .py-3 { padding-top: 0.6rem !important; padding-bottom: 0.6rem !important; }
+}
+
+/* Reduce sidebar width on medium screens */
+@media (min-width: 768px) and (max-width: 991px) {
+  aside.bg-white.border-end {
+    width: 200px !important;
+  }
+}
+
+/* Stack nav labels on very small screens */
+@media (max-width: 480px) {
+  .nav-link { font-size: 0.9rem; }
+}
+
+/* Make action buttons in tables smaller on small screens */
+.table .btn { padding: 0.25rem 0.5rem; font-size: 0.85rem; }
