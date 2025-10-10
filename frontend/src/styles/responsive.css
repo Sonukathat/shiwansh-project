@@ -40,3 +40,13 @@
 @media (max-width: 576px) {
   .btn-mobile-full { width: 100%; display: block; }
 }
+
+/* Sidebar always visible on large screens */
+@media (min-width: 992px) {
+  aside {
+    position: relative !important;
+    transform: translateX(0) !important;
+  }
+}
+
+
