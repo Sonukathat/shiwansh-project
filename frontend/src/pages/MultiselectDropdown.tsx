@@ -215,9 +215,8 @@ function MultiselectDropdown() {
         </div>
       </form>
 
-  {/* Employees Table */}
-  <div className="table-responsive">
-  <table className="table table-bordered">
+      {/* Employees Table */}
+      <table className="table table-bordered">
         <thead>
           <tr>
             <th>Name</th><th>Email</th><th>Mobile</th><th>Country</th>
@@ -242,8 +241,7 @@ function MultiselectDropdown() {
             </tr>
           ))}
         </tbody>
-  </table>
-  </div>
+      </table>
     </div>
   );
 }
