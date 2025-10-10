@@ -141,30 +141,30 @@ function CheckBox() {
       {/* Form */}
       <form onSubmit={handleSubmit} className="p-3 border rounded shadow-sm bg-light mb-4">
         <div className="row mb-3">
-          <div className="col">
+          <div className="col-12 col-sm-6 col-md-4 mb-2">
             <input type="text" name="name" placeholder="Enter Name" className="form-control"
               value={employee.name} onChange={handleChange} required />
           </div>
-          <div className="col">
+          <div className="col-12 col-sm-6 col-md-4 mb-2">
             <input type="email" name="email" placeholder="Enter Email" className="form-control"
               value={employee.email} onChange={handleChange} required />
           </div>
-          <div className="col">
+          <div className="col-12 col-sm-6 col-md-4 mb-2">
             <input type="text" name="mobile" placeholder="Enter Mobile" className="form-control"
               value={employee.mobile} onChange={handleChange} required />
           </div>
         </div>
 
         <div className="row mb-3">
-          <div className="col">
+          <div className="col-12 col-sm-6 col-md-4 mb-2">
             <input type="text" name="country" placeholder="Enter Country" className="form-control"
               value={employee.country} onChange={handleChange} />
           </div>
-          <div className="col">
+          <div className="col-12 col-sm-6 col-md-4 mb-2">
             <input type="text" name="state" placeholder="Enter State" className="form-control"
               value={employee.state} onChange={handleChange} />
           </div>
-          <div className="col">
+          <div className="col-12 col-sm-6 col-md-4 mb-2">
             <input type="text" name="district" placeholder="Enter District" className="form-control"
               value={employee.district} onChange={handleChange} />
           </div>
@@ -193,8 +193,8 @@ function CheckBox() {
             ))}
           </div>
 
-          <div className="col-md-4 d-flex align-items-end justify-content-end">
-            <button type="submit" className="btn btn-primary w-100">
+          <div className="col-12 col-md-4 d-flex align-items-end justify-content-end">
+            <button type="submit" className="btn btn-primary w-100 btn-mobile-full">
               {editingId ? "Update Employee" : "Add Employee"}
             </button>
           </div>

@@ -126,7 +126,7 @@ function Country() {
       <h2>Manage Country</h2>
       <form onSubmit={handleSave} encType="multipart/form-data">
         <div className="row mb-3">
-          <div className="col">
+          <div className="col-12 col-sm-8 mb-2 mb-sm-0">
             <input
               type="text"
               className="form-control"
@@ -136,32 +136,32 @@ function Country() {
               required
             />
           </div>
-        </div>
-
-        <div className="col mb-3">
-          <label>Upload Image</label>
-          <input
-            type="file"
-            accept="image/*"
-            className="form-control"
-            onChange={(e) => {
-              if (e.target.files && e.target.files.length > 0) {
-                setImage(e.target.files[0]);
-              }
-            }}
-            required={!id} // required only when adding
-          />
+          <div className="col-12 col-sm-4">
+            <label className="d-block">Upload Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              className="form-control"
+              onChange={(e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                  setImage(e.target.files[0]);
+                }
+              }}
+              required={!id} // required only when adding
+            />
+          </div>
         </div>
 
         <div className="row mb-3 text-center">
           <div className="col">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary btn-mobile-full">
               {id ? "Update Country" : "Add Country"}
             </button>
           </div>
         </div>
       </form>
 
+      <div className="table-responsive">
       <table className="table table-bordered table-striped">
         <thead>
           <tr>
@@ -199,6 +199,7 @@ function Country() {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

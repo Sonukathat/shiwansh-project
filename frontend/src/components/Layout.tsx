@@ -14,7 +14,7 @@ function Layout({ children }: { children: ReactNode }) {
       </header>
 
       <div className="d-flex flex-grow-1">
-        <aside className="bg-white border-end d-flex flex-column p-3 shadow-sm" style={{ width: "240px" }}>
+  <aside className="bg-white border-end d-flex flex-column p-3 shadow-sm d-none d-md-flex" style={{ width: "240px" }}>
           <h6 className="text-uppercase text-muted mb-3 ps-2 small">Navigation
           </h6>
           <nav className="nav nav-pills flex-column gap-1">
