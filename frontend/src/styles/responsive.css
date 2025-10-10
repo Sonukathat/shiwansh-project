@@ -35,3 +35,8 @@
 
 /* Make action buttons in tables smaller on small screens */
 .table .btn { padding: 0.25rem 0.5rem; font-size: 0.85rem; }
+
+/* Make certain buttons full-width on mobile when needed */
+@media (max-width: 576px) {
+  .btn-mobile-full { width: 100%; display: block; }
+}

@@ -118,7 +118,7 @@ function District() {
       <h2>Manage District</h2>
       <form onSubmit={handleSubmit}>
         <div className="row mb-3">
-          <div className="col">
+          <div className="col-6 col-md-4 mb-2 mb-md-0">
             <input
               type="text"
               placeholder="Enter Country"
@@ -128,7 +128,7 @@ function District() {
               required
             />
           </div>
-          <div className="col">
+          <div className="col-6 col-md-4 mb-2 mb-md-0">
             <input
               type="text"
               placeholder="Enter State"
@@ -138,7 +138,7 @@ function District() {
               required
             />
           </div>
-          <div className="col">
+          <div className="col-6 col-md-4 mb-2 mb-md-0">
             <input
               type="text"
               placeholder="Enter District"
@@ -151,14 +151,16 @@ function District() {
         </div>
         <div className="row mb-3 text-center">
           <div className="col">
-            <button type="submit" className="btn btn-primary">
-              {editingId ? "Update District" : "Add District"}
-            </button>
-            {editingId && (
-              <button type="button" className="btn btn-secondary ms-2" onClick={resetForm}>
-                Cancel
+            <div className="d-grid gap-2 d-md-flex justify-content-center">
+              <button type="submit" className="btn btn-primary btn-mobile-full">
+                {editingId ? "Update District" : "Add District"}
               </button>
-            )}
+              {editingId && (
+                <button type="button" className="btn btn-secondary btn-mobile-full ms-md-2" onClick={resetForm}>
+                  Cancel
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </form>
