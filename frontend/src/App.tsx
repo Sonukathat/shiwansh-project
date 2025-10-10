@@ -24,7 +24,7 @@ function App() {
           <Route path="/country" element={<Country />} />
           <Route path="/state" element={<State />} />
           <Route path="/district" element={<District />} />
-          <Route path="/imageupload" element={<ImageUpload />} />
+          {/* <Route path="/imageupload" element={<ImageUpload />} /> */}
           {/* <Route path="/radiobutton" element={<RadioButton />} /> */}
           {/* <Route path="/searching" element={<Searching />} /> */}
           {/* <Route path="/pagination" element={<Pagination />} /> */}
